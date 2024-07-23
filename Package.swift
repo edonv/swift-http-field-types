@@ -22,7 +22,8 @@ let package = Package(
             name: "HTTPRanges",
             dependencies: [
                 .product(name: "HTTPTypes", package: "swift-http-types"),
-            ]
+            ],
+            resources: [.copy("../PrivacyInfo.xcprivacy")]
         ),
         .testTarget(
             name: "HTTPRangesTests",
