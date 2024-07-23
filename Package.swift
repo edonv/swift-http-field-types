@@ -4,20 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "HTTPFieldRange",
+    name: "swift-http-ranges",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "HTTPFieldRange",
-            targets: ["HTTPFieldRange"]),
+            name: "HTTPRanges",
+            targets: ["HTTPRanges"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "HTTPFieldRange"),
+            name: "HTTPRanges"
+        ),
         .testTarget(
-            name: "HTTPFieldRangeTests",
-            dependencies: ["HTTPFieldRange"]),
+            name: "HTTPRangesTests",
+            dependencies: ["HTTPRanges"]
+        ),
     ]
 )
