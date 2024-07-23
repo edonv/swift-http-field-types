@@ -12,15 +12,24 @@ let package = Package(
             targets: ["HTTPRanges"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "HTTPRanges"
+            name: "HTTPRanges",
+            dependencies: [
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+            ]
         ),
         .testTarget(
             name: "HTTPRangesTests",
-            dependencies: ["HTTPRanges"]
+            dependencies: [
+                "HTTPRanges",
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+            ]
         ),
     ]
 )
