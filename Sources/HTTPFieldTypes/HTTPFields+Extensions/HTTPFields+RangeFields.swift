@@ -14,9 +14,9 @@ extension HTTPFields {
     /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range#syntax> for more detail.
     public var range: HTTPRangeField? {
         get {
-            return self[.range].flatMap { .init(rawValue: $0) }
+            return self[.range].flatMap { .init($0) }
         } set {
-            self[.range] = newValue?.rawValue
+            self[.range] = newValue?.stringValue
         }
     }
     
@@ -28,10 +28,10 @@ extension HTTPFields {
             return self[.acceptRanges]
                 .flatMap { field in
                     guard field != "none" else { return nil }
-                    return .init(rawValue: field)
+                    return .init(field)
                 }
         } set {
-            self[.acceptRanges] = newValue != .other("none") ? newValue?.rawValue : nil
+            self[.acceptRanges] = newValue != .other("none") ? newValue?.stringValue : nil
         }
     }
     
