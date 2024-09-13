@@ -14,24 +14,27 @@ extension HTTPFields {
     /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range#syntax> for more detail.
     public var range: HTTPRangeField? {
         get {
-            return self[.range].flatMap { .init($0) }
+            self[HTTPRangeField.self]
         } set {
-            self[.range] = newValue?.fieldValue
+            self[HTTPRangeField.self] = newValue
         }
     }
     
     /// If there is a `"Accept-Ranges"` header field, convert it to a ``HTTPRange/Unit``.
     ///
     /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Ranges> for more detail.
-    public var acceptRanges: HTTPRange.Unit? {
+    public var acceptRanges: HTTPAcceptRangesField? {
         get {
-            return self[.acceptRanges]
+            self[HTTPAcceptRangesField.self]
                 .flatMap { field in
-                    guard field != "none" else { return nil }
+                    guard field != "none" else {
+                        return nil
+                    }
+                    
                     return .init(field)
                 }
         } set {
-            self[.acceptRanges] = newValue != .other("none") ? newValue?.fieldValue : nil
+            self[HTTPAcceptRangesField.self] = newValue != .other("none") ? newValue : nil
         }
     }
     
@@ -40,9 +43,9 @@ extension HTTPFields {
     /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range> for more detail.
     public var contentRange: HTTPContentRangeField? {
         get {
-            return self[.contentRange].flatMap { .init(rawValue: $0) }
+            self[HTTPContentRangeField.self]
         } set {
-            self[.contentRange] = newValue?.rawValue
+            self[HTTPContentRangeField.self] = newValue
         }
     }
 }
