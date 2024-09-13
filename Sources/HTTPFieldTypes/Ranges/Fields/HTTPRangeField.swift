@@ -27,7 +27,7 @@ public struct HTTPRangeField: HTTPFieldValue {
     }
     
     public var fieldValue: String {
-        return "\(unit.fieldValue)=\(ranges.map(\.rawValue).joined(separator: ", "))"
+        return "\(unit.fieldValue)=\(ranges.map(\.fieldValue).joined(separator: ", "))"
     }
     
     public init?(_ fieldValue: String) {
@@ -39,7 +39,7 @@ public struct HTTPRangeField: HTTPFieldValue {
         let ranges: [HTTPRange] = split[1]
             .components(separatedBy: ", ")
             .compactMap { exp in
-                return .init(rawValue: exp)
+                return .init(exp)
             }
         
         self = .init(unit: .init(String(split[0])), ranges: ranges)

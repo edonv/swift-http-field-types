@@ -35,7 +35,7 @@ public struct HTTPContentRangeField: HTTPFieldValue {
     
     public var fieldValue: String {
         let range = range.map { "\($0.lowerBound)-\($0.upperBound)" } ?? "*"
-        return "\(unit.fieldValue) \(range)/\(totalSize.rawValue)"
+        return "\(unit.fieldValue) \(range)/\(totalSize.fieldValue)"
     }
     
     public init?(_ fieldValue: String) {
@@ -45,13 +45,13 @@ public struct HTTPContentRangeField: HTTPFieldValue {
         
         // It must have a range and size, and they can't both be *'s
         guard split.count == 2 && split != ["*", "*"] else { return nil }
-        self.unit = .init(rawValue: String(split[0]))
+        self.unit = .init(String(split[0]))
         
         let rangePortion = split[1].components(separatedBy: "/")
         
         // The range must have 2 values
         guard rangePortion.count == 2,
-              let size = Size(rawValue: rangePortion[1]) else { return nil }
+              let size = Size(rangePortion[1]) else { return nil }
         self.totalSize = size
         
         let rangeStr = rangePortion[0].components(separatedBy: "-")
