@@ -27,3 +27,13 @@ extension HTTPFieldValue {
     
     public var description: String { fieldValue }
 }
+
+internal extension HTTPFields {
+    subscript<F: HTTPFieldValue>(fieldType: F.Type) -> F? {
+        get {
+            self[F.fieldName].flatMap(F.init)
+        } set {
+            self[F.fieldName] = newValue?.fieldValue
+        }
+    }
+}
