@@ -16,7 +16,7 @@ extension HTTPRange {
     /// Currently only `bytes` units are registered which are *offsets* (zero-indexed & inclusive). If the requested data has a content coding applied, each byte range represents the encoded sequence of bytes, not the bytes that would be obtained after decoding.
     ///
     /// See [here](https://www.rfc-editor.org/rfc/rfc9110.html#section-14.1) for more info.
-    public enum Unit: HTTPFieldValue {
+    public enum Unit: RawRepresentable, HTTPFieldValue {
         public static let fieldName: HTTPField.Name = .acceptRanges
         
         case bytes
@@ -28,23 +28,23 @@ extension HTTPRange {
         public static var none: Unit? { nil }
         
         /// Initialize from a raw string representation from a header field.
-        public init(_ fieldValue: String) {
-            switch fieldValue.lowercased() {
+        public init(rawValue: String) {
+            switch rawValue.lowercased() {
             case "bytes": self = .bytes
-            default: self = .other(fieldValue)
+            default: self = .other(rawValue)
             }
         }
         
         /// The value rendered for insertion in a header field.
-        public var fieldValue: String {
+        public var rawValue: String {
             switch self {
             case .bytes: return "bytes"
             case .other(let string): return string
             }
         }
         
-        public init(rawValue: String) {
-            self.init(rawValue)
+        public init(_ fieldValue: String) {
+            self.init(rawValue: fieldValue)
         }
     }
 }
