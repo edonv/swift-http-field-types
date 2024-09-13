@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-http-ranges",
+    name: "swift-http-header-types",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "HTTPRanges",
-            targets: ["HTTPRanges"]
+            name: "HTTPHeaderTypes",
+            targets: ["HTTPHeaderTypes"]
         ),
     ],
     dependencies: [
@@ -19,16 +19,16 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "HTTPRanges",
+            name: "HTTPHeaderTypes",
             dependencies: [
                 .product(name: "HTTPTypes", package: "swift-http-types"),
             ],
             resources: [.copy("../PrivacyInfo.xcprivacy")]
         ),
         .testTarget(
-            name: "HTTPRangesTests",
+            name: "HTTPHeaderTypesTests",
             dependencies: [
-                "HTTPRanges",
+                "HTTPHeaderTypes",
                 .product(name: "HTTPTypes", package: "swift-http-types"),
             ]
         ),
