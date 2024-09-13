@@ -13,7 +13,7 @@ import Foundation
 ///   1. a `ClosedRange`,
 ///   2. a `PartialRangeFrom`,
 ///   3. or a "reverse index", where it specifies the index from the end.
-public enum HTTPRange: Hashable, Sendable, RawRepresentable {
+public enum HTTPRange: RawRepresentable, HTTPFieldContent {
     /// A `ClosedRange`.
     case closed(ClosedRange<Int>)
     
@@ -69,6 +69,14 @@ public enum HTTPRange: Hashable, Sendable, RawRepresentable {
         case .fromEnd(let index):
             return "-\(index)"
         }
+    }
+    
+    public static func == (lhs: HTTPRange, rhs: HTTPRange) -> Bool {
+        lhs.fieldValue == rhs.fieldValue
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(fieldValue)
     }
 }
 
