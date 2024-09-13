@@ -16,7 +16,7 @@ extension HTTPFields {
         get {
             return self[.range].flatMap { .init($0) }
         } set {
-            self[.range] = newValue?.stringValue
+            self[.range] = newValue?.fieldValue
         }
     }
     
@@ -31,7 +31,7 @@ extension HTTPFields {
                     return .init(field)
                 }
         } set {
-            self[.acceptRanges] = newValue != .other("none") ? newValue?.stringValue : nil
+            self[.acceptRanges] = newValue != .other("none") ? newValue?.fieldValue : nil
         }
     }
     

@@ -14,16 +14,16 @@ public protocol HTTPFieldValue: Hashable, Sendable, RawRepresentable, CustomStri
     static var fieldName: HTTPField.Name { get }
     
     /// The value in string form, for use in a header field.
-    var stringValue: String { get }
+    var fieldValue: String { get }
     /// Initializes the value from a header field's string value.
-    init?(_ stringValue: String)
+    init?(_ fieldValue: String)
 }
 
 extension HTTPFieldValue {
-    public var rawValue: String { stringValue }
+    public var rawValue: String { fieldValue }
     public init?(rawValue: String) {
         self.init(rawValue)
     }
     
-    public var description: String { stringValue }
+    public var description: String { fieldValue }
 }

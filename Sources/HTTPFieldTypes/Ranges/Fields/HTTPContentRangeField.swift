@@ -33,13 +33,13 @@ public struct HTTPContentRangeField: HTTPFieldValue {
         self.totalSize = totalSize
     }
     
-    public var stringValue: String {
+    public var fieldValue: String {
         let range = range.map { "\($0.lowerBound)-\($0.upperBound)" } ?? "*"
         return "\(unit.rawValue) \(range)/\(totalSize.rawValue)"
     }
     
-    public init?(_ stringValue: String) {
-        let split = stringValue
+    public init?(_ fieldValue: String) {
+        let split = fieldValue
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(maxSplits: 2, whereSeparator: { $0 == " " })
         

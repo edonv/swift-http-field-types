@@ -28,15 +28,15 @@ extension HTTPRange {
         public static var none: Unit? { nil }
         
         /// Initialize from a raw string representation from a header field.
-        public init(_ stringValue: String) {
-            switch stringValue.lowercased() {
+        public init(_ fieldValue: String) {
+            switch fieldValue.lowercased() {
             case "bytes": self = .bytes
-            default: self = .other(stringValue)
+            default: self = .other(fieldValue)
             }
         }
         
         /// The value rendered for insertion in a header field.
-        public var stringValue: String {
+        public var fieldValue: String {
             switch self {
             case .bytes: return "bytes"
             case .other(let string): return string

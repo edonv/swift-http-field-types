@@ -26,12 +26,12 @@ public struct HTTPRangeField: HTTPFieldValue {
         self.ranges = ranges
     }
     
-    public var stringValue: String {
+    public var fieldValue: String {
         return "\(unit.rawValue)=\(ranges.map(\.rawValue).joined(separator: ", "))"
     }
     
-    public init?(_ stringValue: String) {
-        let split = stringValue
+    public init?(_ fieldValue: String) {
+        let split = fieldValue
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(maxSplits: 2, whereSeparator: { $0 == "=" })
         
