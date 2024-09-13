@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import HTTPTypes
 
 /// The value of a `Content-Range` HTTP header.
 ///
 /// It notes the units that ``range`` is measured in, a single range, then the total size. It indicates where in a full body message a partial message belongs.
 ///
 /// See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range) for more detail.
-public struct HTTPContentRangeField: Hashable, Sendable, RawRepresentable {
+public struct HTTPContentRangeField: HTTPFieldValue {
+    public static let fieldName: HTTPField.Name = .contentRange
+    
     /// The unit that ``range`` is measured in.
     public let unit: HTTPRange.Unit
     
@@ -30,15 +33,13 @@ public struct HTTPContentRangeField: Hashable, Sendable, RawRepresentable {
         self.totalSize = totalSize
     }
     
-    /// The value rendered for insertion in a header field.
-    public var rawValue: String {
+    public var stringValue: String {
         let range = range.map { "\($0.lowerBound)-\($0.upperBound)" } ?? "*"
         return "\(unit.rawValue) \(range)/\(totalSize.rawValue)"
     }
     
-    /// Initialize from the raw string of a header field.
-    public init?(rawValue: String) {
-        let split = rawValue
+    public init?(_ stringValue: String) {
+        let split = stringValue
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(maxSplits: 2, whereSeparator: { $0 == " " })
         
@@ -100,10 +101,6 @@ public struct HTTPContentRangeField: Hashable, Sendable, RawRepresentable {
             }
         }
     }
-}
-
-extension HTTPContentRangeField: CustomStringConvertible {
-    public var description: String { rawValue }
 }
 
 extension HTTPContentRangeField.Size: CustomStringConvertible {

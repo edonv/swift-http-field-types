@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import HTTPTypes
 
 /// The value of a `Range` HTTP header.
 ///
 /// It notes the units that ``ranges`` is measured in, then lists range(s).
 ///
 /// See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) for more detail.
-public struct HTTPRangeField: Hashable, Sendable, RawRepresentable {
+public struct HTTPRangeField: HTTPFieldValue {
+    public static let fieldName: HTTPField.Name = .range
+    
     /// The unit that ``ranges`` is measured in.
     public let unit: HTTPRange.Unit
     /// The field's range(s).
@@ -23,14 +26,12 @@ public struct HTTPRangeField: Hashable, Sendable, RawRepresentable {
         self.ranges = ranges
     }
     
-    /// The value rendered for insertion in a header field.
-    public var rawValue: String {
+    public var stringValue: String {
         return "\(unit.rawValue)=\(ranges.map(\.rawValue).joined(separator: ", "))"
     }
     
-    /// Initialize from the raw string of a header field.
-    public init?(rawValue: String) {
-        let split = rawValue
+    public init?(_ stringValue: String) {
+        let split = stringValue
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .split(maxSplits: 2, whereSeparator: { $0 == "=" })
         
@@ -41,8 +42,4 @@ public struct HTTPRangeField: Hashable, Sendable, RawRepresentable {
         
         self = .init(unit: .init(rawValue: String(split[0])), ranges: ranges)
     }
-}
-
-extension HTTPRangeField: CustomStringConvertible {
-    public var description: String { rawValue }
 }
