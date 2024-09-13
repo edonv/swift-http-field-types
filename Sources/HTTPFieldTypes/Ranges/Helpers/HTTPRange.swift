@@ -16,8 +16,10 @@ import Foundation
 public enum HTTPRange: Hashable, Sendable, RawRepresentable {
     /// A `ClosedRange`.
     case closed(ClosedRange<Int>)
+    
     /// A `PartialRangeFrom`.
     case partialFrom(PartialRangeFrom<Int>)
+    
     /// A `PartialRangeFrom` where `index` is the index counted from the end.
     ///
     /// > Important: It's works like a zeroed index. So if the range value is `-499` (`index` == `499`) and the total length is `1000` (which means the last valid index is `999`), this range equates to the last `500` elements.
