@@ -72,11 +72,11 @@ public enum HTTPRange: RawRepresentable, HTTPFieldContent {
     }
     
     public static func == (lhs: HTTPRange, rhs: HTTPRange) -> Bool {
-        lhs.fieldValue == rhs.fieldValue
+        lhs.fieldContent == rhs.fieldContent
     }
     
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(fieldValue)
+        hasher.combine(fieldContent)
     }
 }
 

@@ -43,8 +43,8 @@ extension HTTPRange {
             }
         }
         
-        public init(_ fieldValue: String) {
-            self.init(rawValue: fieldValue)
+        public init(_ fieldContent: String) {
+            self.init(rawValue: fieldContent)
         }
     }
 }

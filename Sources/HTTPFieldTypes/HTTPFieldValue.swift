@@ -14,19 +14,19 @@ import HTTPTypes
 /// A protocol for any type that can be represented as the `String` value of an HTTP header field.
 public protocol HTTPFieldContent: Hashable, Sendable, CustomStringConvertible {
     /// The value in string form, for use in a header field.
-    var fieldValue: String { get }
+    var fieldContent: String { get }
     /// Initializes the value from a header field's string value.
-    init?(_ fieldValue: String)
+    init?(_ fieldContent: String)
 }
 
 extension HTTPFieldContent {
-    public var description: String { fieldValue }
+    public var description: String { fieldContent }
 }
 
 extension HTTPFieldContent where Self: RawRepresentable, RawValue == String {
-    public var fieldValue: String { rawValue }
-    public init?(_ fieldValue: String) {
-        self.init(rawValue: fieldValue)
+    public var fieldContent: String { rawValue }
+    public init?(_ fieldContent: String) {
+        self.init(rawValue: fieldContent)
     }
 }
 
@@ -41,7 +41,7 @@ internal extension HTTPFields {
         get {
             self[F.fieldName].flatMap(F.init)
         } set {
-            self[F.fieldName] = newValue?.fieldValue
+            self[F.fieldName] = newValue?.fieldContent
         }
     }
 }
