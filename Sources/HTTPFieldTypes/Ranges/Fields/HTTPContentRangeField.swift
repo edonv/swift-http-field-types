@@ -69,7 +69,7 @@ public struct HTTPContentRangeField: HTTPFieldValue {
     }
     
     /// The total length of the message (or `*` if unknown).
-    public enum Size: Hashable, Sendable, RawRepresentable, ExpressibleByIntegerLiteral {
+    public enum Size: RawRepresentable, HTTPFieldContent, ExpressibleByIntegerLiteral {
         /// A known message size.
         case known(Int)
         
