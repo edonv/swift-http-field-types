@@ -36,10 +36,12 @@ public struct HTTPRangeField: HTTPFieldValue {
             .split(maxSplits: 2, whereSeparator: { $0 == "=" })
         
         // 0-50, 100-150
-        let ranges: [HTTPRange] = split[1].components(separatedBy: ", ").compactMap { exp in
-            return .init(rawValue: exp)
-        }
+        let ranges: [HTTPRange] = split[1]
+            .components(separatedBy: ", ")
+            .compactMap { exp in
+                return .init(rawValue: exp)
+            }
         
-        self = .init(unit: .init(rawValue: String(split[0])), ranges: ranges)
+        self = .init(unit: .init(String(split[0])), ranges: ranges)
     }
 }
