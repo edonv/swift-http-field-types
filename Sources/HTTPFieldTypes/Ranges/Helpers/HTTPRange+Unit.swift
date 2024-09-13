@@ -49,6 +49,8 @@ extension HTTPRange {
     }
 }
 
+public typealias HTTPAcceptRangesField = HTTPRange.Unit
+
 extension HTTPRange.Unit: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(value)
