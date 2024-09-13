@@ -35,7 +35,7 @@ public struct HTTPContentRangeField: HTTPFieldValue {
     
     public var fieldValue: String {
         let range = range.map { "\($0.lowerBound)-\($0.upperBound)" } ?? "*"
-        return "\(unit.rawValue) \(range)/\(totalSize.rawValue)"
+        return "\(unit.fieldValue) \(range)/\(totalSize.rawValue)"
     }
     
     public init?(_ fieldValue: String) {

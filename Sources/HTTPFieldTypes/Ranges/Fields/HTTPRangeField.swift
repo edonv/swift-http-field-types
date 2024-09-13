@@ -27,7 +27,7 @@ public struct HTTPRangeField: HTTPFieldValue {
     }
     
     public var fieldValue: String {
-        return "\(unit.rawValue)=\(ranges.map(\.rawValue).joined(separator: ", "))"
+        return "\(unit.fieldValue)=\(ranges.map(\.rawValue).joined(separator: ", "))"
     }
     
     public init?(_ fieldValue: String) {
