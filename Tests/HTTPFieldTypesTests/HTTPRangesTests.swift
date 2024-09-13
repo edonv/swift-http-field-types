@@ -1,6 +1,6 @@
 import XCTest
 import HTTPTypes
-@testable import HTTPHeaderTypes
+@testable import HTTPFieldTypes
 
 final class HTTPFieldRangeTests: XCTestCase {
     // MARK: - HTTPRange
