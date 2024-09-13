@@ -12,7 +12,7 @@ import HTTPTypes
 //public enum HTTPFieldValues {}
 
 /// A protocol for any type that can be represented as the `String` value of an HTTP header field.
-public protocol HTTPFieldContent: Hashable, Sendable, RawRepresentable, CustomStringConvertible {
+public protocol HTTPFieldContent: Hashable, Sendable, CustomStringConvertible {
     /// The value in string form, for use in a header field.
     var fieldValue: String { get }
     /// Initializes the value from a header field's string value.
@@ -20,12 +20,14 @@ public protocol HTTPFieldContent: Hashable, Sendable, RawRepresentable, CustomSt
 }
 
 extension HTTPFieldContent {
-    public var rawValue: String { fieldValue }
-    public init?(rawValue: String) {
-        self.init(rawValue)
-    }
-    
     public var description: String { fieldValue }
+}
+
+extension HTTPFieldContent where Self: RawRepresentable, RawValue == String {
+    public var fieldValue: String { rawValue }
+    public init?(_ fieldValue: String) {
+        self.init(rawValue: fieldValue)
+    }
 }
 
 /// An extension on ``HTTPFieldContent`` for types that are used in the context a specific header field.
