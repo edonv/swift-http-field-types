@@ -70,4 +70,12 @@ public struct HTTPCookieField: HTTPFieldValue {
             self._cookies[name] = newValue?.value
         }
     }
+    
+    public subscript(valueFor name: String) -> String? {
+        get {
+            self._cookies[name]
+        } set {
+            self._cookies[name] = newValue
+        }
+    }
 }
