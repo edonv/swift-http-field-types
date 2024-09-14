@@ -8,7 +8,7 @@
 import Foundation
 import HTTPTypes
 
-/// The value of a `Range` HTTP header.
+/// The value of a `Range` HTTP header field.
 ///
 /// It notes the units that ``ranges`` is measured in, then lists range(s).
 ///
