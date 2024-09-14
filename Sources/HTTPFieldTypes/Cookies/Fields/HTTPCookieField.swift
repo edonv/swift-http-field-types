@@ -22,12 +22,14 @@ public struct HTTPCookieField: HTTPFieldValue {
     
     public static let fieldName: HTTPField.Name = .cookie
     
-    public let cookies: Set<Cookie>
+    private var _cookies: [String: String]
+    public var cookies: Set<Cookie> {
+        Set(_cookies.map { Cookie(name: $0.key, value: $0.value) })
+    }
     
     public init(_ cookies: [Cookie]) {
-        self.cookies = cookies.reduce(into: []) { partial, cookie in
-            guard !partial.contains(where: { $0.name == cookie.name }) else { return }
-            partial.insert(cookie)
+        self._cookies = cookies.reduce(into: [:]) { partial, cookie in
+            partial[cookie.name] = cookie.value
         }
     }
     
@@ -42,11 +44,12 @@ public struct HTTPCookieField: HTTPFieldValue {
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .components(separatedBy: "; ")
         
-        self.cookies = elements.reduce(into: []) { partial, cookie in
+        let cookies: [Cookie] = elements.reduce(into: []) { partial, cookie in
             guard let c = Cookie(cookie) else { return }
-            partial.insert(c)
+            partial.append(c)
         }
         
-        guard self.cookies.count == elements.count else { return nil }
+        guard cookies.count == elements.count else { return nil }
+        self.init(cookies)
     }
 }

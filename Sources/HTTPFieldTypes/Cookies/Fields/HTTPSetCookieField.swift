@@ -23,16 +23,18 @@ public struct HTTPSetCookieField: HTTPFieldValue {
     /// The cookie set by this header field.
     public let cookie: Cookie
     
+    private var _attributes: [Attribute.Name: Attribute]
     /// The attribute(s) specified by this header field.
     ///
     /// [See here for more.](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes)
-    public let attributes: Set<Attribute>
+    public var attributes: Set<Attribute> {
+        Set(_attributes.values)
+    }
     
     public init(_ cookie: Cookie, attributes: Set<Attribute> = []) {
         self.cookie = cookie
-        self.attributes = attributes.reduce(into: []) { partial, attr in
-            guard !partial.contains(where: { $0.name == attr.name }) else { return }
-            partial.insert(attr)
+        self._attributes = attributes.reduce(into: [:]) { partial, attr in
+            partial[attr.name] = attr
         }
     }
     
@@ -52,23 +54,22 @@ public struct HTTPSetCookieField: HTTPFieldValue {
         guard let cookieStr = elements.first,
               let cookie = Cookie(cookieStr) else { return nil }
         
-        self.cookie = cookie
-        
         let remainingEls = elements
             .dropFirst()
         
-        self.attributes = remainingEls.reduce(into: []) { partial, attrString in
+        let attributes: Set<Attribute> = remainingEls.reduce(into: []) { partial, attrString in
             guard let attr = Attribute(attrString) else { return }
             partial.insert(attr)
         }
         
         // Ensure finished with same number attributes as split string elements
-        guard self.attributes.count == remainingEls.count
+        guard attributes.count == remainingEls.count
                 // If contains .partitioned, must contain .secure
                 && !(attributes.contains(.partitioned) && !attributes.contains(.secure))
                 // If contains .sameSite(.none), must contain .secure
                 && !(attributes.contains(.sameSite(.none)) && !attributes.contains(.secure)) else {
             return nil
         }
+        self.init(cookie, attributes: attributes)
     }
 }
