@@ -22,7 +22,7 @@ final class HTTPFieldRangeTests: XCTestCase {
     
     func testDecodeRange() throws {
         let string = "bytes=200-999, 2000-2499, 9500-, -500"
-        let range = HTTPRangeField(rawValue: string)
+        let range = HTTPRangeField(string)
         print(range ?? "")
         XCTAssert(
             range == .init(
@@ -48,15 +48,15 @@ final class HTTPFieldRangeTests: XCTestCase {
             ]
         )
         
-        print(field.rawValue)
-        XCTAssert(field.rawValue == "bytes=200-999, 2000-2499, 9500-, -500")
+        print(field.fieldContent)
+        XCTAssert(field.fieldContent == "bytes=200-999, 2000-2499, 9500-, -500")
     }
     
     // MARK: - HTTPContentRangeField
     
     func testDecodeContentRange() {
         let string1 = "bytes 200-1000/67589"
-        let range1 = HTTPContentRangeField(rawValue: string1)
+        let range1 = HTTPContentRangeField(string1)
 //        print(range ?? "")
         XCTAssert(
             range1 == .init(
@@ -67,7 +67,7 @@ final class HTTPFieldRangeTests: XCTestCase {
         )
         
         let string2 = "test 200-1000/*"
-        let range2 = HTTPContentRangeField(rawValue: string2)
+        let range2 = HTTPContentRangeField(string2)
         //        print(range ?? "")
         XCTAssert(
             range2 == .init(
@@ -78,7 +78,7 @@ final class HTTPFieldRangeTests: XCTestCase {
         )
         
         let string3 = "test */67589"
-        let range3 = HTTPContentRangeField(rawValue: string3)
+        let range3 = HTTPContentRangeField(string3)
         //        print(range ?? "")
         XCTAssert(
             range3 == .init(
@@ -96,21 +96,21 @@ final class HTTPFieldRangeTests: XCTestCase {
             totalSize: 67589
         )
         
-        XCTAssert(range1.rawValue == "bytes 200-1000/67589")
+        XCTAssert(range1.fieldContent == "bytes 200-1000/67589")
         
         let range2 = HTTPContentRangeField(
             unit: "test",
             range: 200...1000,
             totalSize: .unknown
         )
-        XCTAssert(range2.rawValue == "test 200-1000/*")
+        XCTAssert(range2.fieldContent == "test 200-1000/*")
         
         let range3 = HTTPContentRangeField(
             unit: "test",
             range: nil,
             totalSize: 67589
         )
-        XCTAssert(range3.rawValue == "test */67589")
+        XCTAssert(range3.fieldContent == "test */67589")
     }
 
 }
