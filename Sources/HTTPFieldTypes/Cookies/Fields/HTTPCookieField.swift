@@ -58,6 +58,10 @@ public struct HTTPCookieField: HTTPFieldValue {
             .map { Cookie(name: name, value: $0) }
     }
     
+    public mutating func add(cookie: Cookie) {
+        self[cookie.name] = cookie
+    }
+    
     public subscript(name: String) -> Cookie? {
         get {
             self._cookies[name]
