@@ -52,4 +52,22 @@ public struct HTTPCookieField: HTTPFieldValue {
         guard cookies.count == elements.count else { return nil }
         self.init(cookies)
     }
+    
+    public mutating func set(cookie name: String, to value: String?) {
+        self[name] = value
+            .map { Cookie(name: name, value: $0) }
+    }
+    
+    public subscript(name: String) -> Cookie? {
+        get {
+            self._cookies[name]
+                .map { Cookie(name: name, value: $0) }
+        } set {
+            if newValue?.name != name {
+                self._cookies.removeValue(forKey: name)
+            }
+            
+            self._cookies[name] = newValue?.value
+        }
+    }
 }
