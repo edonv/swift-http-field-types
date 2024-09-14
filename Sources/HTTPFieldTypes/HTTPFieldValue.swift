@@ -17,6 +17,7 @@ import HTTPTypes
 public protocol HTTPFieldContent: Hashable, Sendable, CustomStringConvertible {
     /// The value in string form, for use in a header field.
     var fieldContent: String { get }
+    
     /// Initializes the value from a header field's string value.
     init?(_ fieldContent: String)
 }
