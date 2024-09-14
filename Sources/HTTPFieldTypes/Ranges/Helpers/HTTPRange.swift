@@ -70,14 +70,6 @@ public enum HTTPRange: RawRepresentable, HTTPFieldContent {
             return "-\(index)"
         }
     }
-    
-    public static func == (lhs: HTTPRange, rhs: HTTPRange) -> Bool {
-        lhs.fieldContent == rhs.fieldContent
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(fieldContent)
-    }
 }
 
 extension HTTPRange: RangeExpression {
