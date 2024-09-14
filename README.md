@@ -10,3 +10,8 @@ Formerly `swift-http-ranges`, `swift-http-field-types` now covers all kinds of s
 - Ranges
   - [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
   - [Content-Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range)
+- Cookies
+  - [Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie)
+  - [Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
+- Dates
+  - [Date](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date) (Note that this field type isn't fully finished yet, only the value type of the header is complete.)
