@@ -11,7 +11,7 @@ import HTTPTypes
 extension HTTPFields {
     /// If there is a `"Range"` header field, convert it to a ``HTTPRangeField``.
     ///
-    /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range#syntax> for more detail.
+    /// See <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range> for more detail.
     public var range: HTTPRangeField? {
         get {
             self[HTTPRangeField.self]
